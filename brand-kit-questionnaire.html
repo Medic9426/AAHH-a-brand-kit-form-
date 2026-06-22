@@ -27,10 +27,6 @@ header p{font-size:16px;color:var(--text-secondary);max-width:500px;line-height:
 .section-eyebrow{font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--burgundy-light);margin-bottom:8px}
 .section-title{font-family:'Bona Nova',serif;font-size:clamp(24px,4vw,34px);font-weight:400;color:var(--text-primary);margin-bottom:12px;line-height:1.2}
 .section-desc{font-size:15px;color:var(--text-secondary);margin-bottom:32px;line-height:1.8}
-.example-block{background:var(--surface);border-left:2px solid var(--burgundy);padding:16px 20px;margin-bottom:32px;border-radius:0 3px 3px 0}
-.example-label{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--burgundy-light);margin-bottom:10px}
-.example-block p{font-size:14px;color:var(--text-secondary);line-height:1.7;font-style:italic}
-.example-block p+p{margin-top:8px}
 .field{margin-bottom:28px}
 label{display:block;font-size:14px;color:var(--text-secondary);margin-bottom:8px}
 input[type="text"],input[type="email"],textarea{width:100%;background:var(--surface);border:0.5px solid var(--border);color:var(--text-primary);font-family:'EB Garamond',serif;font-size:16px;padding:12px 16px;border-radius:3px;transition:border-color 0.2s;outline:none;-webkit-appearance:none}
@@ -38,6 +34,13 @@ input[type="text"]:focus,input[type="email"]:focus,textarea:focus{border-color:v
 input::placeholder,textarea::placeholder{color:var(--text-muted);font-style:italic}
 textarea{min-height:100px;resize:vertical;line-height:1.65}
 textarea.tall{min-height:140px}
+
+/* Choice buttons */
+.choice-wrap{display:flex;gap:16px;margin-top:8px}
+.choice-btn{flex:1;font-family:'EB Garamond',serif;font-size:17px;padding:20px 16px;border-radius:3px;border:0.5px solid var(--border);background:var(--surface);color:var(--text-secondary);cursor:pointer;transition:all 0.2s;text-align:center;line-height:1.3}
+.choice-btn:hover{border-color:var(--burgundy-light);color:var(--text-primary);background:var(--burgundy-dim)}
+.choice-btn.selected{border-color:var(--burgundy-light);color:var(--text-primary);background:var(--burgundy-dim)}
+
 .upload-zone{border:0.5px dashed rgba(255,255,255,0.13);border-radius:3px;padding:28px 24px;text-align:center;cursor:pointer;transition:border-color 0.2s,background 0.2s;position:relative}
 .upload-zone:hover{border-color:var(--burgundy-light);background:var(--burgundy-dim)}
 .upload-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
@@ -47,6 +50,7 @@ textarea.tall{min-height:140px}
 .file-list{margin-top:12px;font-size:13px;color:var(--text-secondary)}
 .file-item{padding:5px 0;border-bottom:0.5px solid var(--border);display:flex;justify-content:space-between}
 .file-size{color:var(--text-muted);font-size:12px}
+
 .nav-wrap{display:flex;justify-content:space-between;align-items:center;padding:40px 0 64px;border-top:0.5px solid var(--border);margin-top:40px}
 .btn{font-family:'EB Garamond',serif;font-size:15px;padding:11px 28px;border-radius:2px;border:0.5px solid;cursor:pointer;transition:all 0.2s;letter-spacing:0.03em;background:transparent}
 .btn-ghost{color:var(--text-secondary);border-color:var(--border)}
@@ -54,6 +58,7 @@ textarea.tall{min-height:140px}
 .btn-primary{color:var(--text-primary);border-color:var(--burgundy-light);background:var(--burgundy-dim)}
 .btn-primary:hover{background:rgba(139,58,46,0.28);border-color:var(--accent)}
 .btn-primary:disabled{opacity:0.4;cursor:not-allowed}
+
 .submitting-msg{display:none;text-align:center;padding:60px 0;font-size:15px;color:var(--text-secondary);font-style:italic}
 .success-screen{display:none;text-align:center;padding:80px 0}
 .success-screen.active{display:block}
@@ -61,11 +66,12 @@ textarea.tall{min-height:140px}
 .success-screen h2{font-family:'Bona Nova',serif;font-size:26px;font-weight:400;margin-bottom:16px}
 .success-screen p{font-size:16px;color:var(--text-secondary);max-width:380px;margin:0 auto;line-height:1.8}
 .error-msg{background:rgba(139,58,46,0.15);border:0.5px solid var(--burgundy);border-radius:3px;padding:14px 18px;font-size:14px;color:var(--accent);margin-top:16px;display:none}
+
 footer{padding:28px 0;border-top:0.5px solid var(--border)}
 .footer-inner{display:flex;justify-content:space-between;align-items:center}
 .footer-brand{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted)}
 .footer-tagline{font-size:13px;color:var(--text-muted);font-style:italic}
-@media(max-width:500px){header{padding:36px 0 32px}.footer-inner{flex-direction:column;gap:8px;text-align:center}.nav-wrap{flex-direction:column-reverse;gap:12px}.btn{width:100%;text-align:center}}
+@media(max-width:500px){header{padding:36px 0 32px}.footer-inner{flex-direction:column;gap:8px;text-align:center}.nav-wrap{flex-direction:column-reverse;gap:12px}.btn{width:100%;text-align:center}.choice-wrap{flex-direction:column}}
 </style>
 </head>
 <body>
@@ -74,206 +80,218 @@ footer{padding:28px 0;border-top:0.5px solid var(--border)}
 <header>
   <div class="aaah-mark">AAAH — F&amp;B Consulting</div>
   <h1>Brand Kit<br>Questionnaire</h1>
-  <p>This is where your brand starts. Take your time with each section — the more specific you are, the sharper the final kit will be.</p>
+  <p>Fill this in and we'll take it from here.</p>
 </header>
 
 <div class="progress-wrap" id="progressWrap">
   <div class="progress-meta">
     <span class="progress-label">Progress</span>
-    <span class="progress-count" id="progressCount">Section 1 of 12</span>
+    <span class="progress-count" id="progressCount"></span>
   </div>
-  <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill" style="width:8.3%"></div></div>
+  <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
 </div>
 
 <form id="brandForm" novalidate>
 
-<div class="section active" data-section="1">
-  <div class="section-eyebrow">Section 01</div>
-  <h2 class="section-title">Your Brand Name &amp; Tagline</h2>
-  <p class="section-desc">Start with the basics — what the brand is called, exactly as it should appear everywhere.</p>
-  <div class="example-block">
-    <div class="example-label">Examples</div>
-    <p>"Creatures" — shape-shifting social space atop Otherland Galle.</p>
-    <p>"Wineyard" — never "The Wineyard." The name itself is the whole thing.</p>
-    <p>"Blindspot" — seven seats, no sign.</p>
+<!-- GATE — brand book check -->
+<div class="section active" data-section="gate">
+  <div class="section-eyebrow">Before we start</div>
+  <h2 class="section-title">Do you already have a brand book or brand guidelines?</h2>
+  <p class="section-desc">If you do, you can upload it directly and we'll work from that.</p>
+  <div class="choice-wrap">
+    <button type="button" class="choice-btn" id="choiceYes" onclick="handleGate('yes')">Yes, I have one</button>
+    <button type="button" class="choice-btn" id="choiceNo" onclick="handleGate('no')">No, let's build it</button>
   </div>
-  <div class="field"><label>Brand name (exact spelling, casing, punctuation)</label><input type="text" name="brand_name" placeholder="e.g. Cantina Futura" /></div>
-  <div class="field"><label>Tagline — or describe this place in one sentence and we'll write one together</label><textarea name="tagline" placeholder="e.g. A playground for chefs, where imagination feeds the soul."></textarea></div>
 </div>
 
+<!-- UPLOAD — brand book upload screen -->
+<div class="section" data-section="upload">
+  <div class="section-eyebrow">Upload</div>
+  <h2 class="section-title">Upload your brand book.</h2>
+  <p class="section-desc">Any format works — PDF, images, a Canva link in the notes below. Upload everything you have.</p>
+  <div class="field">
+    <div class="upload-zone"><input type="file" id="file-brandbook" multiple accept="image/*,application/pdf,.ai,.eps,.svg" /><span class="upload-arrow">↑</span><p>Drag files here or <span>browse</span></p><p style="font-size:12px;margin-top:4px">PDF, PNG, SVG, AI, EPS — all formats welcome</p></div>
+    <div class="file-list" id="list-brandbook"></div>
+  </div>
+  <div class="field">
+    <label>Any notes or links (optional)</label>
+    <textarea name="brandbook_notes" placeholder="e.g. Canva link, Google Drive link, or anything else we should know"></textarea>
+  </div>
+  <div class="field">
+    <label>Your name</label>
+    <input type="text" name="client_name_upload" />
+  </div>
+  <div class="field">
+    <label>Your email</label>
+    <input type="email" name="client_email_upload" />
+  </div>
+  <div class="error-msg" id="errorMsgUpload">Something went wrong. Please try again or email ashwin.abraham94@gmail.com directly.</div>
+</div>
+
+<!-- MAIN FORM SECTIONS -->
+
+<!-- S1 -->
+<div class="section" data-section="1">
+  <div class="section-eyebrow">Section 01</div>
+  <h2 class="section-title">Let's start with the basics.</h2>
+  <p class="section-desc">What's the brand called?</p>
+  <div class="field">
+    <label>Brand name</label>
+    <input type="text" name="brand_name" />
+  </div>
+  <div class="field">
+    <label>Tagline</label>
+    <textarea name="tagline" placeholder="Describe it in one sentence if you don't have one yet."></textarea>
+  </div>
+</div>
+
+<!-- S2 -->
 <div class="section" data-section="2">
   <div class="section-eyebrow">Section 02</div>
-  <h2 class="section-title">Why This Place Exists</h2>
-  <p class="section-desc">Not "we serve great drinks." The deeper reason — what this space is actually for.</p>
-  <div class="example-block">
-    <div class="example-label">Examples</div>
-    <p>"Creatures is not a place for people to 'go out.' It's a place to drop in — to themselves, to the rhythm, to something elevated."</p>
-    <p>"Cantina Futura isn't just about food — it's about understanding the complex web that connects our plates to the world."</p>
+  <h2 class="section-title">Why it exists.</h2>
+  <div class="field">
+    <label>The deeper reason — why does this brand actually exist?</label>
+    <textarea class="tall" name="why_exist"></textarea>
   </div>
-  <div class="field"><label>Why does this place exist — beyond the obvious?</label><textarea class="tall" name="why_exist" placeholder="What is this space actually for? What would be missing if it closed?"></textarea></div>
-  <div class="field"><label>If someone walked out after their first visit and described it to a friend — what would you want them to say?</label><textarea name="first_impression" placeholder="e.g. 'It felt like someone had thought about every detail, but nothing was trying too hard.'"></textarea></div>
+  <div class="field">
+    <label>What would you want someone to say after their first experience with this brand?</label>
+    <textarea name="first_impression"></textarea>
+  </div>
 </div>
 
+<!-- S3 -->
 <div class="section" data-section="3">
   <div class="section-eyebrow">Section 03</div>
-  <h2 class="section-title">What You Are. What You're Not.</h2>
-  <p class="section-desc">The most useful tool for staying on brand. Be specific — vague here makes everything harder later.</p>
-  <div class="example-block">
-    <div class="example-label">Example — Creatures</div>
-    <p>Not: A themed venue. No scarabs, no monsters, no faux jungle. Not an EDM club — music is curated, not chaotic. Not fine dining — the food is serious, not stiff.</p>
+  <h2 class="section-title">Brand Principles.</h2>
+  <p class="section-desc">The things that, if they went missing, this brand would stop being itself.</p>
+  <div class="field">
+    <label>Principle 1 — name</label>
+    <input type="text" name="principle_1_name" />
   </div>
-  <div class="field"><label>We are... (3–4 statements about what defines this brand)</label><textarea class="tall" name="we_are" placeholder="e.g. A room that earns the quiet. A bar for people who already know what they like."></textarea></div>
-  <div class="field"><label>We are not... (3–4 things you never want to be compared to)</label><textarea class="tall" name="we_are_not" placeholder="e.g. Not a nightclub. Not a hotel bar. Not the kind of place that uses 'curated' in its Instagram bio."></textarea></div>
+  <div class="field">
+    <label>Principle 1 — what it means</label>
+    <textarea name="principle_1_desc"></textarea>
+  </div>
+  <div class="field">
+    <label>Principle 2 — name</label>
+    <input type="text" name="principle_2_name" />
+  </div>
+  <div class="field">
+    <label>Principle 2 — what it means</label>
+    <textarea name="principle_2_desc"></textarea>
+  </div>
+  <div class="field">
+    <label>Principle 3 — name (optional)</label>
+    <input type="text" name="principle_3_name" />
+  </div>
+  <div class="field">
+    <label>Principle 3 — what it means (optional)</label>
+    <textarea name="principle_3_desc"></textarea>
+  </div>
 </div>
 
+<!-- S4 -->
 <div class="section" data-section="4">
   <div class="section-eyebrow">Section 04</div>
-  <h2 class="section-title">Brand Principles</h2>
-  <p class="section-desc">3–5 things that, if they went missing, this place would stop being itself. Give each one a name.</p>
-  <div class="example-block">
-    <div class="example-label">Examples — Creatures</div>
-    <p><em>Sensory First</em> — If it doesn't feel like something, it doesn't belong.</p>
-    <p><em>Mystery Over Clarity</em> — We give just enough to let people make the story their own.</p>
-    <p><em>Raw Sophistication</em> — Bohemian, not bourgeois. Luxe, but never sterile.</p>
+  <h2 class="section-title">Your Audience.</h2>
+  <div class="field">
+    <label>Primary audience</label>
+    <textarea class="tall" name="audience_primary" placeholder="Who are they, what do they care about, why do they come here?"></textarea>
   </div>
-  <div class="field"><label>Principle 1 — name</label><input type="text" name="principle_1_name" placeholder="e.g. Slow as a Value" /></div>
-  <div class="field"><label>Principle 1 — what it means for this brand</label><textarea name="principle_1_desc" placeholder="e.g. We're not in a hurry. Neither should the guest be."></textarea></div>
-  <div class="field"><label>Principle 2 — name</label><input type="text" name="principle_2_name" placeholder="Name" /></div>
-  <div class="field"><label>Principle 2 — what it means</label><textarea name="principle_2_desc" placeholder="Description..."></textarea></div>
-  <div class="field"><label>Principle 3 — name</label><input type="text" name="principle_3_name" placeholder="Name" /></div>
-  <div class="field"><label>Principle 3 — what it means</label><textarea name="principle_3_desc" placeholder="Description..."></textarea></div>
-  <div class="field"><label>Principle 4 (optional)</label><input type="text" name="principle_4_name" placeholder="Leave blank if not needed" /></div>
-  <div class="field"><label>Principle 4 — what it means (optional)</label><textarea name="principle_4_desc" placeholder="Description..."></textarea></div>
+  <div class="field">
+    <label>Secondary audience (if there is one)</label>
+    <textarea name="audience_secondary" placeholder="A second type of guest who also belongs here..."></textarea>
+  </div>
 </div>
 
+<!-- S5 -->
 <div class="section" data-section="5">
   <div class="section-eyebrow">Section 05</div>
-  <h2 class="section-title">Your Audience</h2>
-  <p class="section-desc">Not demographics. Describe your guests like a person — what they do, what they care about, what a good night means to them.</p>
-  <div class="example-block">
-    <div class="example-label">Example</div>
-    <p>Primary: The after-work crowd. 28–40, works in media or creative industries. Wants the first drink to land hard and the second to be slower. Doesn't need to explain why they're here.</p>
-    <p>Secondary: Industry nights — bartenders and chefs on days off. Wants to be surprised, not sold to.</p>
+  <h2 class="section-title">Tone &amp; Voice.</h2>
+  <div class="field">
+    <label>3 words that describe how this brand sounds</label>
+    <input type="text" name="voice_words" />
   </div>
-  <div class="field"><label>Primary audience — describe them as a person, not a demographic</label><textarea class="tall" name="audience_primary" placeholder="Who are they, what do they care about, why do they come here?"></textarea></div>
-  <div class="field"><label>Secondary audience (if there is one)</label><textarea name="audience_secondary" placeholder="A second type of guest who also belongs here..."></textarea></div>
-  <div class="field"><label>What do your best guests care about outside this space? Music, fashion, food, travel, sport.</label><textarea name="audience_interests" placeholder="e.g. They follow chefs, not restaurants. They own records. They travel to eat."></textarea></div>
+  <div class="field">
+    <label>Any brand, publication, or person whose voice you'd want to sound like?</label>
+    <input type="text" name="voice_ref" />
+  </div>
 </div>
 
+<!-- S6 -->
 <div class="section" data-section="6">
   <div class="section-eyebrow">Section 06</div>
-  <h2 class="section-title">Tone &amp; Voice</h2>
-  <p class="section-desc">How does this brand sound when it speaks? Not adjectives like "friendly" — something more specific. Give us real examples.</p>
-  <div class="example-block">
-    <div class="example-label">Examples</div>
-    <p>Wineyard: Warm but not eager. Dry wit. Never salesy.<br>Write like: "The kind of glass you have when you're not trying to impress anyone."<br>Never write like: "Join us for an unforgettable wine experience this Friday!!!"</p>
-  </div>
-  <div class="field"><label>Voice in 3 words — not generic. Think: dry, measured, direct, poetic, blunt.</label><input type="text" name="voice_words" placeholder="e.g. Quiet · Assured · Dry" /></div>
-  <div class="field"><label>Write like this — 2 example lines in the brand's voice</label><textarea name="voice_do" placeholder="e.g. 'Come in. We were expecting you.'"></textarea></div>
-  <div class="field"><label>Never write like this — 2 examples of what feels completely off-brand</label><textarea name="voice_dont" placeholder="e.g. 'Exciting news! We're thrilled to announce...'"></textarea></div>
-  <div class="field"><label>Any brand, character, or publication that sounds the way you'd want to sound?</label><input type="text" name="voice_ref" placeholder="e.g. Anthony Bourdain writing. Ace Hotel lobby energy." /></div>
-</div>
-
-<div class="section" data-section="7">
-  <div class="section-eyebrow">Section 07</div>
-  <h2 class="section-title">Brand Keywords</h2>
-  <p class="section-desc">6–8 words that belong to this brand's world. Nouns, textures, emotions, times of day — not just adjectives.</p>
-  <div class="example-block">
-    <div class="example-label">Examples</div>
-    <p>Cantina Futura: Dialogue · Ecosystem · Heritage · Ingredients · Culinary · Innovation</p>
-    <p>Late-night bar: Amber · Smoke · Slow Pour · Ritual · Depth · After Midnight</p>
-    <p>Natural wine bar: Soil · Unfiltered · Conversation · Quiet · Process · Honest</p>
-  </div>
-  <div class="field"><label>Your 6–8 brand keywords (separate with · or commas)</label><textarea name="keywords" placeholder="e.g. Salt · Worn-in · Ritual · Dusk · Copper · Memory · Unhurried"></textarea></div>
-</div>
-
-<div class="section" data-section="8">
-  <div class="section-eyebrow">Section 08</div>
-  <h2 class="section-title">The Mood</h2>
-  <p class="section-desc">Describe being in this space at its best — light, sound, temperature. Then share anything visual that captures it.</p>
-  <div class="example-block">
-    <div class="example-label">Example</div>
-    <p>Creatures: "The pause before the drop. Not the party — the anticipation of it. Red-orange light. Bass you feel before you hear it. The ocean somewhere behind everything."</p>
-  </div>
-  <div class="field"><label>Describe the sensory experience — light, texture, sound, temperature</label><textarea class="tall" name="mood_sensory" placeholder="e.g. Warm amber light. Low ceilings. The sound of a glass being set down carefully."></textarea></div>
-  <div class="field"><label>Any visual references — Instagram accounts, films, places, photographers</label><textarea name="mood_refs" placeholder="e.g. @holycityhandcraft. The bar scene in Lost in Translation. Old Goa light at 6pm."></textarea></div>
+  <h2 class="section-title">Visual Direction.</h2>
+  <p class="section-desc">Upload 2–3 images that represent the color world or visual feeling you're after. Screenshots, saved posts, anything that captures the direction.</p>
   <div class="field">
-    <label>Upload mood images — screenshots, saves, anything visual (optional)</label>
-    <div class="upload-zone"><input type="file" id="file-mood" multiple accept="image/*" /><span class="upload-arrow">↑</span><p>Drag images here or <span>browse</span></p><p style="font-size:12px;margin-top:4px">Instagram saves, Pinterest screenshots, anything that captures the vibe</p></div>
+    <div class="upload-zone"><input type="file" id="file-mood" multiple accept="image/*" /><span class="upload-arrow">↑</span><p>Drag images here or <span>browse</span></p><p style="font-size:12px;margin-top:4px">Minimum 2–3 images</p></div>
     <div class="file-list" id="list-mood"></div>
   </div>
 </div>
 
-<div class="section" data-section="9">
-  <div class="section-eyebrow">Section 09</div>
-  <h2 class="section-title">Color Palette</h2>
-  <p class="section-desc">What colors already exist? Describe the feel — HEX codes if you have them, words if not.</p>
-  <div class="example-block">
-    <div class="example-label">Examples</div>
-    <p>Cantina Futura: Off-white canvas, deep charcoal text, warm amber accent.</p>
-    <p>Goa beach bar: Faded terracotta, bleached linen, deep ocean teal.</p>
-  </div>
-  <div class="field"><label>Colors already in use — signage, space, existing materials</label><textarea name="colors_existing" placeholder="e.g. The walls are dark olive. The logo is deep rust red. Menus are on cream stock."></textarea></div>
-  <div class="field"><label>Color feel in words — warm or cool, deep or light, muted or vivid?</label><input type="text" name="colors_feel" placeholder="e.g. Warm and dark. Like late evening light on old wood." /></div>
+<!-- S7 -->
+<div class="section" data-section="7">
+  <div class="section-eyebrow">Section 07</div>
+  <h2 class="section-title">Color Palette.</h2>
   <div class="field">
-    <label>Upload color references — logo files, brand materials (optional)</label>
-    <div class="upload-zone"><input type="file" id="file-color" multiple accept="image/*,application/pdf" /><span class="upload-arrow">↑</span><p>Drag files here or <span>browse</span></p><p style="font-size:12px;margin-top:4px">Logo files, brand materials, color swatches</p></div>
+    <label>Colors already in use — HEX codes if you have them, descriptions if not</label>
+    <textarea name="colors_existing"></textarea>
+  </div>
+  <div class="field">
+    <label>Color feel in words</label>
+    <input type="text" name="colors_feel" />
+  </div>
+  <div class="field">
+    <label>Upload any existing brand materials with the right colors (optional)</label>
+    <div class="upload-zone"><input type="file" id="file-color" multiple accept="image/*,application/pdf" /><span class="upload-arrow">↑</span><p>Drag files here or <span>browse</span></p></div>
     <div class="file-list" id="list-color"></div>
   </div>
 </div>
 
-<div class="section" data-section="10">
-  <div class="section-eyebrow">Section 10</div>
-  <h2 class="section-title">Typography</h2>
-  <p class="section-desc">Fonts are voice on paper. What typography feel suits this brand — and does anything already exist?</p>
-  <div class="example-block">
-    <div class="example-label">Examples</div>
-    <p>Creatures: IBM Plex Mono + IBM Plex Sans — technical precision meets approachable warmth.</p>
-    <p>Heritage bar: Weathered display font for headers, clean modern type for body.</p>
+<!-- S8 -->
+<div class="section" data-section="8">
+  <div class="section-eyebrow">Section 08</div>
+  <h2 class="section-title">Typography.</h2>
+  <div class="field">
+    <label>Any fonts already in use?</label>
+    <input type="text" name="fonts_existing" />
   </div>
-  <div class="field"><label>Any fonts already in use — logo, menus, signage?</label><input type="text" name="fonts_existing" placeholder="e.g. The logo uses a custom serif. Menus are in Garamond. Nothing locked in yet." /></div>
-  <div class="field"><label>Typography feel — which direction suits this brand?</label><input type="text" name="fonts_feel" placeholder="e.g. Serif — editorial, slow, considered. Or: Mono — precise, technical, unexpected." /></div>
+  <div class="field">
+    <label>Typography feel — serif, sans-serif, mono, display?</label>
+    <input type="text" name="fonts_feel" />
+  </div>
 </div>
 
-<div class="section" data-section="11">
-  <div class="section-eyebrow">Section 11</div>
-  <h2 class="section-title">Your Logo</h2>
-  <p class="section-desc">Tell us where the logo stands — what exists, what's needed, and any rules around how it should appear.</p>
-  <div class="example-block">
-    <div class="example-label">Example direction</div>
-    <p>Cantina Futura: "Sans-serif, heavy, readable. The type should be recognizable without the motif. Motifs are food-related in sketch style — black and white with a splash of color."</p>
-  </div>
-  <div class="field"><label>Logo status</label><input type="text" name="logo_status" placeholder="e.g. Existing logo / Needs to be designed / Only have a rough version" /></div>
+<!-- S9 -->
+<div class="section" data-section="9">
+  <div class="section-eyebrow">Section 09</div>
+  <h2 class="section-title">Logo &amp; Contact.</h2>
   <div class="field">
-    <label>Upload logo files — PNG, SVG, PDF, EPS, whatever you have (optional)</label>
-    <div class="upload-zone"><input type="file" id="file-logo" multiple accept="image/*,application/pdf,.svg,.eps,.ai" /><span class="upload-arrow">↑</span><p>Drag files here or <span>browse</span></p><p style="font-size:12px;margin-top:4px">All formats welcome — PNG, SVG, PDF, AI, EPS</p></div>
+    <label>Logo status</label>
+    <input type="text" name="logo_status" />
+  </div>
+  <div class="field">
+    <label>Upload logo files (optional)</label>
+    <div class="upload-zone"><input type="file" id="file-logo" multiple accept="image/*,application/pdf,.svg,.eps,.ai" /><span class="upload-arrow">↑</span><p>Drag files here or <span>browse</span></p><p style="font-size:12px;margin-top:4px">PNG, SVG, PDF, AI, EPS — all formats welcome</p></div>
     <div class="file-list" id="list-logo"></div>
   </div>
-  <div class="field"><label>Rules about how it appears — or direction if it still needs to be designed</label><textarea name="logo_notes" placeholder="e.g. Always on dark backgrounds. Never smaller than 40px wide. Or: Wordmark only, no icon."></textarea></div>
-</div>
-
-<div class="section" data-section="12">
-  <div class="section-eyebrow">Section 12</div>
-  <h2 class="section-title">Photography &amp; Visual Style</h2>
-  <p class="section-desc">The last section. What does great photography look like for this brand — and what would feel completely wrong?</p>
-  <div class="example-block">
-    <div class="example-label">Examples</div>
-    <p>Wineyard: Warm, intimate, natural light. Glasses with condensation. Unhurried. Never forced composition.</p>
-    <p>Creatures: Silhouettes, motion blur, light refraction. Never posed. The atmosphere is the subject, not the person.</p>
+  <div class="field">
+    <label>Any notes on logo usage or direction</label>
+    <textarea name="logo_notes"></textarea>
   </div>
-  <div class="field"><label>Shoot style — staged and editorial, or candid and documentary?</label><input type="text" name="photo_style" placeholder="e.g. Candid, always. Or: Slow and editorial — everything is placed." /></div>
-  <div class="field"><label>Lighting direction</label><input type="text" name="photo_lighting" placeholder="e.g. Moody and dark. Natural light only. Golden hour. Flash-lit night energy." /></div>
-  <div class="field"><label>Shoot like this — describe 2 ideal shots for this brand</label><textarea name="photo_do" placeholder="e.g. A hand holding a glass against a dark background. The bar from the street at night, one light on inside."></textarea></div>
-  <div class="field"><label>Never shoot like this — what feels completely wrong?</label><textarea name="photo_dont" placeholder="e.g. Never bright white backgrounds. No forced smiles. No stock-photo hands."></textarea></div>
-  <div class="field"><label>Editing feel — color grading, film grain, contrast?</label><input type="text" name="photo_edit" placeholder="e.g. Warm and slightly desaturated. Like a film still. High contrast with deep blacks." /></div>
-  <div class="field"><label>Anything else before we build this brand kit?</label><textarea name="anything_else" placeholder="References, concerns, things you've seen and loved..."></textarea></div>
-  <div class="field"><label>Your name</label><input type="text" name="client_name" placeholder="Your name" /></div>
-  <div class="field"><label>Your email — we'll confirm once we've received everything</label><input type="email" name="client_email" placeholder="your@email.com" /></div>
+  <div class="field">
+    <label>Your name</label>
+    <input type="text" name="client_name" />
+  </div>
+  <div class="field">
+    <label>Your email</label>
+    <input type="email" name="client_email" />
+  </div>
   <div class="error-msg" id="errorMsg">Something went wrong. Please try again or email ashwin.abraham94@gmail.com directly.</div>
 </div>
 
-<div class="nav-wrap" id="navWrap">
-  <button type="button" class="btn btn-ghost" id="prevBtn" onclick="navigate(-1)" disabled>← Back</button>
+<div class="nav-wrap" id="navWrap" style="display:none">
+  <button type="button" class="btn btn-ghost" id="prevBtn" onclick="navigate(-1)">← Back</button>
   <button type="button" class="btn btn-primary" id="nextBtn" onclick="navigate(1)">Next section →</button>
 </div>
 
@@ -299,24 +317,57 @@ footer{padding:28px 0;border-top:0.5px solid var(--border)}
 
 <script>
 const SCRIPT_URL='https://script.google.com/macros/s/AKfycbxrguMOgUHFl13Y7Ch1HVpprHZqyHyr1O3zKFl2HQrTengEETOeBJW1SQW1wSd_GrTy/exec';
-const TOTAL=12;
+const MAIN_SECTIONS=9;
+let mode=null; // 'upload' or 'form'
 let current=1;
-const uploadedFiles={mood:[],color:[],logo:[]};
+const uploadedFiles={mood:[],color:[],logo:[],brandbook:[]};
 
-function showSection(n){
+function showOnly(sectionId){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelector(`[data-section="${n}"]`).classList.add('active');
-  document.getElementById('prevBtn').disabled=n===1;
-  document.getElementById('nextBtn').textContent=n===TOTAL?'Submit →':'Next section →';
-  document.getElementById('progressCount').textContent=`Section ${n} of ${TOTAL}`;
-  document.getElementById('progressFill').style.width=`${(n/TOTAL)*100}%`;
+  const el=document.querySelector(`[data-section="${sectionId}"]`);
+  if(el)el.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
+function setProgress(n,total){
+  document.getElementById('progressCount').textContent=`Section ${n} of ${total}`;
+  document.getElementById('progressFill').style.width=`${(n/total)*100}%`;
+}
+
+function handleGate(choice){
+  document.getElementById('choiceYes').classList.toggle('selected',choice==='yes');
+  document.getElementById('choiceNo').classList.toggle('selected',choice==='no');
+
+  if(choice==='yes'){
+    mode='upload';
+    showOnly('upload');
+    document.getElementById('navWrap').style.display='flex';
+    document.getElementById('prevBtn').style.display='none';
+    document.getElementById('nextBtn').textContent='Submit →';
+    document.getElementById('progressCount').textContent='Upload brand book';
+    document.getElementById('progressFill').style.width='100%';
+  } else {
+    mode='form';
+    current=1;
+    showOnly(1);
+    document.getElementById('navWrap').style.display='flex';
+    document.getElementById('prevBtn').disabled=true;
+    document.getElementById('nextBtn').textContent='Next section →';
+    setProgress(1,MAIN_SECTIONS);
+  }
+}
+
 function navigate(dir){
-  if(dir===1&&current===TOTAL){submitForm();return;}
-  current=Math.max(1,Math.min(TOTAL,current+dir));
-  showSection(current);
+  if(mode==='upload'){
+    submitForm();
+    return;
+  }
+  if(dir===1&&current===MAIN_SECTIONS){submitForm();return;}
+  current=Math.max(1,Math.min(MAIN_SECTIONS,current+dir));
+  showOnly(current);
+  document.getElementById('prevBtn').disabled=current===1;
+  document.getElementById('nextBtn').textContent=current===MAIN_SECTIONS?'Submit →':'Next section →';
+  setProgress(current,MAIN_SECTIONS);
 }
 
 function setupUpload(inputId,listId,key){
@@ -332,6 +383,7 @@ function setupUpload(inputId,listId,key){
 setupUpload('file-mood','list-mood','mood');
 setupUpload('file-color','list-color','color');
 setupUpload('file-logo','list-logo','logo');
+setupUpload('file-brandbook','list-brandbook','brandbook');
 
 function readFileAsBase64(file){
   return new Promise((resolve,reject)=>{
@@ -347,6 +399,15 @@ function collectText(){
   document.getElementById('brandForm').querySelectorAll('input[name],textarea[name]').forEach(el=>{
     if(el.type!=='file')data[el.name]=el.value;
   });
+  // normalise contact fields for upload mode
+  if(mode==='upload'){
+    data.client_name=data.client_name_upload||data.client_name||'';
+    data.client_email=data.client_email_upload||data.client_email||'';
+    data.brand_name='Brand Book Upload';
+    data.submission_type='brand_book_upload';
+  } else {
+    data.submission_type='questionnaire';
+  }
   return data;
 }
 
@@ -354,40 +415,50 @@ async function submitForm(){
   const nextBtn=document.getElementById('nextBtn');
   nextBtn.disabled=true;
   nextBtn.textContent='Sending...';
-  document.getElementById('errorMsg').style.display='none';
+  const errId=mode==='upload'?'errorMsgUpload':'errorMsg';
+  document.getElementById(errId).style.display='none';
+
   try{
     const textData=collectText();
     const fileData={};
-    for(const[key,files]of Object.entries(uploadedFiles)){
-      if(files.length>0){
-        fileData[`${key}_images`]=await Promise.all(files.map(readFileAsBase64));
+
+    if(mode==='upload'){
+      if(uploadedFiles.brandbook.length>0){
+        fileData['brandbook_images']=await Promise.all(uploadedFiles.brandbook.map(readFileAsBase64));
+      }
+    } else {
+      for(const[key,files]of Object.entries(uploadedFiles)){
+        if(key!=='brandbook'&&files.length>0){
+          fileData[`${key}_images`]=await Promise.all(files.map(readFileAsBase64));
+        }
       }
     }
+
     const payload={...textData,files:fileData};
     document.getElementById('brandForm').style.display='none';
     document.getElementById('navWrap').style.display='none';
     document.getElementById('progressWrap').style.display='none';
     document.getElementById('submittingMsg').style.display='block';
+
     const response=await fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify(payload)});
     const result=await response.json();
     document.getElementById('submittingMsg').style.display='none';
+
     if(result.success){
       document.getElementById('successScreen').classList.add('active');
-    }else{
+    } else {
       throw new Error(result.error||'Unknown error');
     }
-  }catch(err){
+  } catch(err){
     document.getElementById('brandForm').style.display='block';
     document.getElementById('navWrap').style.display='flex';
     document.getElementById('progressWrap').style.display='block';
     document.getElementById('submittingMsg').style.display='none';
-    document.getElementById('errorMsg').style.display='block';
+    document.getElementById(errId).style.display='block';
     nextBtn.disabled=false;
-    nextBtn.textContent='Submit →';
+    nextBtn.textContent=mode==='upload'?'Submit →':(current===MAIN_SECTIONS?'Submit →':'Next section →');
   }
 }
-
-showSection(1);
 </script>
 </body>
 </html>
